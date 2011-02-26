@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import md5
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 
@@ -22,24 +23,37 @@ class MainHandler(webapp.RequestHandler):
     def get(self):
         self.response.out.write('Hello world!')
 
-    class PostInstall(webapp.RequestHandler):
-        def get(self):
-            #prepare the auth string
-            shop = self.request.get("shop")
-            t = self.request.get("t")
-            timestamp = self.request.get("timestamp")
-            signature = self.request.get("signature")
+        
 
-            prehash = 'shop=' + shop + 't=' + t + 'timestamp=' + timestamp
+class PostInstall(webapp.RequestHandler):
+    def get(self):
+        #prepare the auth string
+        shop = self.request.get("shop")
+        t = self.request.get("t")
+        timestamp = self.request.get("timestamp")
+        signature = self.request.get("signature")
 
-            #opal friut api key: b30e1bed92b052ae6cf6a01ba0bef581
-            sharedSecret = 'b30e1bed92b052ae6cf6a01ba0bef581'
-            posthash = md5.new()
-            authsig = posthash.update(prehash).digest()
-            if(authsig == signature):
-                print 'auth successful'
-            else:
-                print 'auth failed'
+        paramsList = []
+        paramsList.append('shop=' + shop)
+        paramsList.append('t=' + t)
+        paramsList.append('timestamp=' + timestamp)
+        print paramsList
+        paramsList.sort()
+        prehash = paramsList[0] + paramsList[1] + paramsList[2]
+        print prehash
+        
+        #opal fruit shared secret: c2dc05b6fe55a38ecd1fe2ee9e614db8
+        sharedSecret = 'c2dc05b6fe55a38ecd1fe2ee9e614db8'
+        posthash = md5.new()
+        posthash.update(sharedSecret + prehash)
+        print posthash.hexdigest()
+        print signature
+        if(posthash.hexdigest() == signature):
+            print 'auth successful'
+        else:
+            print 'auth failed'
+
+        
 
 
 def main():

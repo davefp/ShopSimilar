@@ -20,6 +20,7 @@ import urllib
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.api import urlfetch
+import colourSearch
 
 import BeautifulSoup
 
@@ -74,6 +75,9 @@ class PostInstall(webapp.RequestHandler):
             for tag in srcTags:
                 imageUrls.append(tag.string);
             print imageUrls
+
+            colours = [[255,255,255]]
+            colourSearch.colourSearch(colours)
 
         else:
             print 'auth failed'

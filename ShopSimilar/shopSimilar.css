@@ -34,7 +34,7 @@ div.swatchPanel {
 	text-align: left;
 }
 
-div.swatchPanel + canvas + div.swatchPanel {
+div.swatchPanel + div#easel + div.swatchPanel {
 	float: right;
 	margin-right: 50px;
 	margin-left: 0;
@@ -42,7 +42,7 @@ div.swatchPanel + canvas + div.swatchPanel {
 	text-align: right;
 }
 
-div.swatch {
+div.swatchPanel div {
 	width: 100px;
 	height: 100px;
 	
@@ -51,13 +51,32 @@ div.swatch {
 	border: 2px solid #000000;
 }
 
+div.swatchPanel div.selectedSwatch {
+	border-color: #999999;
+}
+
+div#easel {
+	display: inline-block;
+	margin: 0 auto;
+	
+	width: 604px;
+	height: 404px;
+}
+
 canvas {
 	display: inline-block;
+	
+	position: absolute;
+	z-index: 10;
 	
 	width: 600px;
 	height: 400px;
 	
 	border: 2px solid #000000;
+}
+
+canvas + canvas {
+	z-index: 20;
 }
 
 div#userImageFooter {
@@ -85,6 +104,6 @@ img.productImage {
 }
 
 /* temp colour fills, get rid of these */
-div.swatch { background-color: #ff0; }
-div.swatch + div.swatch { background-color: #f0f; }
-div.swatch + div.swatch + div.swatch { background-color: #0ff; }
+div.swatchPanel div { background-color: #ff0; }
+div.swatchPanel div + div { background-color: #f0f; }
+div.swatchPanel div + div + div { background-color: #0ff; }

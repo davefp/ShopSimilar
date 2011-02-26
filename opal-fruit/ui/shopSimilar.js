@@ -1,4 +1,4 @@
-const TEST_IMG = "shopify_office_lamps.png";
+const TEST_IMG = "http://localhost:8080/ui/shopify_office_lamps.png";
 const HIGHLIGHT_SIZE = 25;
 
 /* We can get this form JS, it's just a pain in the ass to parse out and I'm too lazy to do it. */
@@ -95,19 +95,40 @@ function handleCanvasMouseMove(canvas, event) {
 }
 
 function handleCanvasMouseUp(imageCanvasId, event) {
+	// If the user hasn't clicked on a swatch, we've nothing to do.
+	if( selectedSwatch == null ) {
+		return;
+	}
+	
 	dragEnabled = false;
 	
-	var imageCanvas = document.getElementById("imageCanvasId");
+	var imageCanvas = document.getElementById(imageCanvasId);
 	var context = imageCanvas.getContext("2d");
 	
-	var clickX = event.pageX - canvas.offsetLeft;
-	var clickY = event.pageY - canvas.offsetTop;
-	var swatchIndex = getSwatchIndex();
+	var clickX = event.pageX - imageCanvas.offsetLeft;
+	var clickY = event.pageY - imageCanvas.offsetTop;
 	
-	swatchPositions[swatchIndex][0] = clickX;
-	swatchPositions[swatchIndex][1] = clickY;
+	var imageData = context.getImageData(clickX, clickY, HIGHLIGHT_SIZE, HIGHLIGHT_SIZE).data;
 	
+	var r=0;
+	var g=0;
+	var b=0;
 	
+	// Extract the colour data.
+	for (var i=0; i < imageData.length; i += 4) {
+		r += imageData[i];
+		g += imageData[i+1];
+		b += imageData[i+2];
+	}
+	
+	// Set the swatch to the average colour.
+	var numberOfPixels = imageData.length/4;
+	
+	r = r/numberOfPixels;
+	g = g/numberOfPixels;
+	b = b/numberOfPixels;
+	
+	selectedSwatch.style.backgroundColor = "rgb(" + Math.floor(r) + ", " + Math.floor(g) + ", " + Math.floor(b) + ")";
 }
 
 function redrawSwatches(canvas) {

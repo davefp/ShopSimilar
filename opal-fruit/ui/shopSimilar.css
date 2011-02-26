@@ -64,7 +64,7 @@ div#easel {
 }
 
 canvas {
-	display: inline-block;
+	display: none;
 	
 	position: absolute;
 	z-index: 10;

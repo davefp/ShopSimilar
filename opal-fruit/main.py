@@ -16,6 +16,7 @@
 #
 import md5
 import base64
+import urllib
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.api import urlfetch
@@ -68,13 +69,12 @@ class PostInstall(webapp.RequestHandler):
             soup = BeautifulSoup.BeautifulStoneSoup(result.content)
             print soup.prettify()
 
-            images = soup.findAll('images')
-            print images
+            srcTags = soup.findAll('src')
+            imageUrls = []
+            for tag in srcTags:
+                imageUrls.append(tag.string);
+            print imageUrls
 
-            
-            #set up shop url for posting stuff to it
-            #GET /admin/products/#{id}/images.xml
-            
         else:
             print 'auth failed'
 

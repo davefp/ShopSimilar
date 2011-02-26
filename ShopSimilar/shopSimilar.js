@@ -4,15 +4,26 @@ const HIGHLIGHT_SIZE = 25;
 /* We can get this form JS, it's just a pain in the ass to parse out and I'm too lazy to do it. */
 const CANVAS_BORDER_WIDTH = 2;
 
-var selectedSwatch = null;
+var dragEnabled = false;
 
-function selectSwatch(swatch) {
+var selectedSwatch = null;
+var swatchPositions = [
+	[null, null],
+	[null, null],
+	[null, null],
+	[null, null],
+	[null, null]
+];
+
+function selectSwatch(swatch, canvasId) {
 	if( selectedSwatch != null ) {
-		selectedSwatch.id = "";
+		selectedSwatch.setAttribute("class", "");
 	}
 	
-	swatch.id = "selectedSwatch";
+	swatch.setAttribute("class", "selectedSwatch");
 	selectedSwatch = swatch;
+	
+	redrawSwatches(document.getElementById(canvasId));
 }
 
 function addUserImage(easelId, canvasId, canvasOverlayId) {
@@ -45,16 +56,93 @@ function addUserImage(easelId, canvasId, canvasOverlayId) {
 	img.src = TEST_IMG;
 }
 
+function getSwatchIndex() {
+	return selectedSwatch.id.substr(2);
+}
+
 function handleCanvasClick(canvas, event) {
 	// If the user hasn't selected a swatch, we've nothing to do.
 	if( selectedSwatch == null ) {
 		return;
 	}
 	
+	dragEnabled = true;
+	
 	var clickX = event.pageX - canvas.offsetLeft;
 	var clickY = event.pageY - canvas.offsetTop;
+	var swatchIndex = getSwatchIndex();
 	
+	swatchPositions[swatchIndex][0] = clickX;
+	swatchPositions[swatchIndex][1] = clickY;
+	
+	redrawSwatches(canvas);
+}
+
+function handleCanvasMouseMove(canvas, event) {
+	// If the user hasn't clicked on a swatch, we've nothing to do.
+	if( !dragEnabled ) {
+		return;
+	}
+
+	var clickX = event.pageX - canvas.offsetLeft;
+	var clickY = event.pageY - canvas.offsetTop;
+	var swatchIndex = getSwatchIndex();
+	
+	swatchPositions[swatchIndex][0] = clickX;
+	swatchPositions[swatchIndex][1] = clickY;
+	
+	redrawSwatches(canvas);
+}
+
+function handleCanvasMouseUp(imageCanvasId, event) {
+	dragEnabled = false;
+	
+	var imageCanvas = document.getElementById("imageCanvasId");
+	var context = imageCanvas.getContext("2d");
+	
+	var clickX = event.pageX - canvas.offsetLeft;
+	var clickY = event.pageY - canvas.offsetTop;
+	var swatchIndex = getSwatchIndex();
+	
+	swatchPositions[swatchIndex][0] = clickX;
+	swatchPositions[swatchIndex][1] = clickY;
+	
+	
+}
+
+function redrawSwatches(canvas) {
+	var selectedSwatchIndex = getSwatchIndex();
+	
+	// Clear the old highlights.
+	canvas.width = canvas.width;
+	
+	// Set colours.
 	var context = canvas.getContext("2d");
+	context.lineWidth = 2;
+	context.fillStyle = "rgba(255, 255, 255, 0.75)";
+	context.strokeStyle = "rgba(255, 255, 255, 1.0)";
 	
-	
+	// Draw the current highlights.
+	for( var position in swatchPositions )
+	{
+		posX = swatchPositions[position][0];
+		posY = swatchPositions[position][1];
+		
+		// Quit once we've drawn all valid swatches.
+		if( posX != null && posY != null ) {
+			
+			context.beginPath();
+			context.rect(posX, posY, HIGHLIGHT_SIZE, HIGHLIGHT_SIZE);
+			context.closePath();
+			context.fill();
+			
+			// Draw a border around the current swatch.
+			if( position == selectedSwatchIndex ) {
+				context.beginPath();
+				context.rect(posX-1, posY-1, HIGHLIGHT_SIZE+1, HIGHLIGHT_SIZE+1);
+				context.closePath();
+				context.stroke();
+			}
+		}
+	}
 }

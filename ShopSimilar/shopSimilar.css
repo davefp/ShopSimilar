@@ -42,7 +42,7 @@ div.swatchPanel + div#easel + div.swatchPanel {
 	text-align: right;
 }
 
-div.swatch {
+div.swatchPanel div {
 	width: 100px;
 	height: 100px;
 	
@@ -51,7 +51,7 @@ div.swatch {
 	border: 2px solid #000000;
 }
 
-div#selectedSwatch {
+div.swatchPanel div.selectedSwatch {
 	border-color: #999999;
 }
 
@@ -104,6 +104,6 @@ img.productImage {
 }
 
 /* temp colour fills, get rid of these */
-div.swatch { background-color: #ff0; }
-div.swatch + div.swatch { background-color: #f0f; }
-div.swatch + div.swatch + div.swatch { background-color: #0ff; }
+div.swatchPanel div { background-color: #ff0; }
+div.swatchPanel div + div { background-color: #f0f; }
+div.swatchPanel div + div + div { background-color: #0ff; }

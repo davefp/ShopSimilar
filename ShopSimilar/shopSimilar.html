@@ -11,9 +11,9 @@
 		
 		<div id="userImageArea" class="tlc">
 			<div class="swatchPanel">
-				<div class="swatch" onclick="selectSwatch(this);"></div>
-				<div class="swatch" onclick="selectSwatch(this);"></div>
-				<div class="swatch" onclick="selectSwatch(this);"></div>
+				<div id="sw0" onclick="selectSwatch(this, 'swatches');"></div>
+				<div id="sw1" onclick="selectSwatch(this, 'swatches');"></div>
+				<div id="sw2" onclick="selectSwatch(this, 'swatches');"></div>
 			</div>
 			
 			<div id="easel">
@@ -22,12 +22,16 @@
 					<p>Consider upgrading to <a href="http://www.getfirefox.com">Firefox</a> or <a href="http://www.google.com/chrome">Chrome</a>!</p>
 				</canvas>
 				
-				<canvas id="swatches" width="600" height="400" onclick="handleCanvasClick(this, event);"></canvas>
+				<canvas id="swatches" width="600" height="400"
+					onmousedown="handleCanvasClick(this, event);"
+					onmousemove="handleCanvasMouseMove(this, event);"
+					onmouseup="handleCanvasMouseUp('userImage', event)";>
+				</canvas>
 			</div>
 			
 			<div class="swatchPanel">
-				<div class="swatch" onclick="selectSwatch(this);"></div>
-				<div class="swatch" onclick="selectSwatch(this);"></div>
+				<div id="sw3" onclick="selectSwatch(this, 'swatches');"></div>
+				<div id="sw4" onclick="selectSwatch(this, 'swatches');"></div>
 			</div>
 			
 			<div id="userImageFooter"></div>

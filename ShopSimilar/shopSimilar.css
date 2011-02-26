@@ -102,8 +102,3 @@ img.productImage {
 	height: 150px;
 	background-color: #000000;
 }
-
-/* temp colour fills, get rid of these */
-div.swatchPanel div { background-color: #ff0; }
-div.swatchPanel div + div { background-color: #f0f; }
-div.swatchPanel div + div + div { background-color: #0ff; }

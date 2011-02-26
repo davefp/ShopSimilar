@@ -1,4 +1,4 @@
-const TEST_IMG = "shopify_office_lamps.png";
+const TEST_IMG = "http://s3.amazonaws.com/37assets/svn/shopify_office_lamps.png";
 const HIGHLIGHT_SIZE = 25;
 
 /* We can get this form JS, it's just a pain in the ass to parse out and I'm too lazy to do it. */
@@ -102,12 +102,9 @@ function handleCanvasMouseUp(imageCanvasId, event) {
 	
 	var clickX = event.pageX - canvas.offsetLeft;
 	var clickY = event.pageY - canvas.offsetTop;
-	var swatchIndex = getSwatchIndex();
 	
-	swatchPositions[swatchIndex][0] = clickX;
-	swatchPositions[swatchIndex][1] = clickY;
-	
-	
+	var imageData = context.getImageData(clickX, clickY, HIGHLIGHT_SIZE, HIGHLIGHT_SIZE);
+	alert( imageData );
 }
 
 function redrawSwatches(canvas) {

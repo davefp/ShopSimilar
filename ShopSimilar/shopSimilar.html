@@ -6,7 +6,7 @@
 		<script type="text/javascript" src="shopSimilar.js"></script>
 	</head>
 	
-	<body onload="addUserImage('canvas')">
+	<body onload="addUserImage('easel', 'userImage', 'swatches')">
 		<h1 class="tlc">ShopSimilar</h1>
 		
 		<div id="userImageArea" class="tlc">
@@ -16,10 +16,14 @@
 				<div class="swatch" onclick="selectSwatch(this);"></div>
 			</div>
 			
-			<canvas id="canvas" width="600" height="400">
-				<p>Your browser does not support canvas, which is required for this app.</p>
-				<p>Consider upgrading to <a href="http://www.getfirefox.com">Firefox</a> or <a href="http://www.google.com/chrome">Chrome</a>!</p>
-			</canvas>
+			<div id="easel">
+				<canvas id="userImage" width="600" height="400">
+					<p>Your browser does not support canvas, which is required for this app.</p>
+					<p>Consider upgrading to <a href="http://www.getfirefox.com">Firefox</a> or <a href="http://www.google.com/chrome">Chrome</a>!</p>
+				</canvas>
+				
+				<canvas id="swatches" width="600" height="400" onclick="handleCanvasClick(this, event);"></canvas>
+			</div>
 			
 			<div class="swatchPanel">
 				<div class="swatch" onclick="selectSwatch(this);"></div>

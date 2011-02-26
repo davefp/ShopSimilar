@@ -34,7 +34,7 @@ div.swatchPanel {
 	text-align: left;
 }
 
-div.swatchPanel + canvas + div.swatchPanel {
+div.swatchPanel + div#easel + div.swatchPanel {
 	float: right;
 	margin-right: 50px;
 	margin-left: 0;
@@ -55,13 +55,28 @@ div#selectedSwatch {
 	border-color: #999999;
 }
 
+div#easel {
+	display: inline-block;
+	margin: 0 auto;
+	
+	width: 604px;
+	height: 404px;
+}
+
 canvas {
 	display: inline-block;
+	
+	position: absolute;
+	z-index: 10;
 	
 	width: 600px;
 	height: 400px;
 	
 	border: 2px solid #000000;
+}
+
+canvas + canvas {
+	z-index: 20;
 }
 
 div#userImageFooter {

@@ -1,4 +1,8 @@
+const POST_URL = "localhost:8080/colorData";
+
+/* We'll do image upload eventually, for now just hardcode an image. */
 const TEST_IMG = "http://localhost:8080/ui/shopify_office_lamps.png";
+
 const HIGHLIGHT_SIZE = 25;
 
 /* We can get this form JS, it's just a pain in the ass to parse out and I'm too lazy to do it. */
@@ -128,7 +132,7 @@ function handleCanvasMouseUp(imageCanvasId, event) {
 	g = g/numberOfPixels;
 	b = b/numberOfPixels;
 	
-	selectedSwatch.style.backgroundColor = "rgb(" + Math.floor(r) + ", " + Math.floor(g) + ", " + Math.floor(b) + ")";
+	selectedSwatch.style.backgroundColor = "rgb(" + Math.floor(r) + "," + Math.floor(g) + "," + Math.floor(b) + ")";
 }
 
 function redrawSwatches(canvas) {
@@ -166,4 +170,66 @@ function redrawSwatches(canvas) {
 			}
 		}
 	}
+}
+
+function sendSwatches() {
+	// Create the swatch objects.
+	var sw0 = document.getElementById("sw0");
+	var sw1 = document.getElementById("sw1");
+	var sw2 = document.getElementById("sw2");
+	var sw3 = document.getElementById("sw3");
+	var sw4 = document.getElementById("sw4");
+	
+	var sw0rgb = sw0.style.backgroundColor.slice(4, -1);
+	var sw1rgb = sw1.style.backgroundColor.slice(4, -1);
+	var sw2rgb = sw2.style.backgroundColor.slice(4, -1);
+	var sw3rgb = sw3.style.backgroundColor.slice(4, -1);
+	var sw4rgb = sw4.style.backgroundColor.slice(4, -1);
+	
+	var allColors = "";
+	
+	if( sw0rgb != "" ){ allColors += sw0rgb + "|" };
+	if( sw1rgb != "" ){ allColors += sw1rgb + "|" };
+	if( sw2rgb != "" ){ allColors += sw2rgb + "|" };
+	if( sw3rgb != "" ){ allColors += sw3rgb + "|" };
+	if( sw4rgb != "" ){ allColors += sw4rgb + "|" };
+	
+	allColors = allColors.slice(0,-1);
+	
+	// Send them in an AJAX request.
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", POST_URL, true);
+	xhr.setRequestHeader("Content-type", "text/plain");
+	
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200){
+			alert("success!");
+		}
+		else {
+			alert("fail! " + xhr.readyState + ", " + xhr.status);
+		}
+	}
+	
+	xhr.send(allColours);
+}
+
+function loadProducts() {
+	var productList = document.createElement("div");
+	productList.setAttribute("class", "productList");
+	
+	for (var i=0; i<10; i++)
+	{
+		var div = document.createElement("div");
+		div.setAttribute("class", "productWrapper");
+		
+		var img = document.createElement("img");
+		img.setAttribute("alt", "");
+		img.setAttribute("src", "http://www.ottawafolklore.com/wp-content/uploads/2011/02/Shopify-Green_256x256.jpg");
+		
+		div.appendChild(img);
+		productList.appendChild(div);
+	}
+	
+	var productArea = document.getElementById("productArea");
+	productArea.appendChild(productList);
 }

@@ -12,9 +12,15 @@ class PostInstall(webapp.RequestHandler):
 
         prehash = 'shop=' + shop + 't=' + t + 'timestamp=' + timestamp
 
-        sharedSecret = 'blah'
+        #opal friut api key: b30e1bed92b052ae6cf6a01ba0bef581
+        sharedSecret = 'b30e1bed92b052ae6cf6a01ba0bef581'
         posthash = md5.new()
-        posthash.update(prehash)
+        authsig = posthash.update(prehash).digest()
+        if(authsig == signature):
+            print 'auth successful'
+        else:
+            print 'auth failed'
+        
         
  
 

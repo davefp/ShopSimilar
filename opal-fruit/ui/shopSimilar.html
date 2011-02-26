@@ -3,24 +3,35 @@
 		<title>Shop Similar</title>
 		
 		<link type="text/css" rel="stylesheet" href="shopSimilar.css" />
+		<script type="text/javascript" src="shopSimilar.js"></script>
 	</head>
 	
-	<body>
+	<body onload="addUserImage('easel', 'userImage', 'swatches')">
 		<h1 class="tlc">ShopSimilar</h1>
 		
 		<div id="userImageArea" class="tlc">
 			<div class="swatchPanel">
-				<div class="swatch"></div>
-				<div class="swatch"></div>
-				<div class="swatch"></div>
+				<div id="sw0" onclick="selectSwatch(this, 'swatches');"></div>
+				<div id="sw1" onclick="selectSwatch(this, 'swatches');"></div>
+				<div id="sw2" onclick="selectSwatch(this, 'swatches');"></div>
 			</div>
 			
-			<canvas id="userImage"></canvas>
+			<div id="easel">
+				<canvas id="userImage" width="600" height="400">
+					<p>Your browser does not support canvas, which is required for this app.</p>
+					<p>Consider upgrading to <a href="http://www.getfirefox.com">Firefox</a> or <a href="http://www.google.com/chrome">Chrome</a>!</p>
+				</canvas>
+				
+				<canvas id="swatches" width="600" height="400"
+					onmousedown="handleCanvasClick(this, event);"
+					onmousemove="handleCanvasMouseMove(this, event);"
+					onmouseup="handleCanvasMouseUp('userImage', event)";>
+				</canvas>
+			</div>
 			
 			<div class="swatchPanel">
-				<div class="swatch"></div>
-				<div class="swatch"></div>
-				<div class="swatch"></div>
+				<div id="sw3" onclick="selectSwatch(this, 'swatches');"></div>
+				<div id="sw4" onclick="selectSwatch(this, 'swatches');"></div>
 			</div>
 			
 			<div id="userImageFooter"></div>

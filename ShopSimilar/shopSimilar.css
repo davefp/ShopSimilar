@@ -51,6 +51,10 @@ div.swatch {
 	border: 2px solid #000000;
 }
 
+div#selectedSwatch {
+	border-color: #999999;
+}
+
 canvas {
 	display: inline-block;
 	

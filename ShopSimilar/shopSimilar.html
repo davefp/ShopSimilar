@@ -3,24 +3,27 @@
 		<title>Shop Similar</title>
 		
 		<link type="text/css" rel="stylesheet" href="shopSimilar.css" />
+		<script type="text/javascript" src="shopSimilar.js"></script>
 	</head>
 	
-	<body>
+	<body onload="addUserImage('canvas')">
 		<h1 class="tlc">ShopSimilar</h1>
 		
 		<div id="userImageArea" class="tlc">
 			<div class="swatchPanel">
-				<div class="swatch"></div>
-				<div class="swatch"></div>
-				<div class="swatch"></div>
+				<div class="swatch" onclick="selectSwatch(this);"></div>
+				<div class="swatch" onclick="selectSwatch(this);"></div>
+				<div class="swatch" onclick="selectSwatch(this);"></div>
 			</div>
 			
-			<canvas id="userImage"></canvas>
+			<canvas id="canvas" width="600" height="400">
+				<p>Your browser does not support canvas, which is required for this app.</p>
+				<p>Consider upgrading to <a href="http://www.getfirefox.com">Firefox</a> or <a href="http://www.google.com/chrome">Chrome</a>!</p>
+			</canvas>
 			
 			<div class="swatchPanel">
-				<div class="swatch"></div>
-				<div class="swatch"></div>
-				<div class="swatch"></div>
+				<div class="swatch" onclick="selectSwatch(this);"></div>
+				<div class="swatch" onclick="selectSwatch(this);"></div>
 			</div>
 			
 			<div id="userImageFooter"></div>
